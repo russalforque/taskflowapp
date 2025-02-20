@@ -1,20 +1,20 @@
 <template>
-  <div class="bg-[#181A1E] h-screen">
-    <LoginPage></LoginPage>
+  <div>
+    
   </div>
+  <router-view/>
 </template>
 
 <script>
-import LoginPage from './components/LoginPage.vue'
+
 
 export default {
-  name: 'App',
-  components: {
-    LoginPage
+  components:{
+  
   }
 }
 </script>
-
 <style>
   
+
 </style>
