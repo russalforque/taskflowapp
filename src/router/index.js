@@ -7,11 +7,6 @@ import TodoListView from '@/views/TodoListView.vue'
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: HomeView
-  },
-  {
-    path: '/login',
     name: 'login',
     component: LoginView
   },
@@ -21,10 +16,16 @@ const routes = [
     component: SignUpView
   },
   {
+    path: '/home',
+    name: 'Home',
+    component: HomeView
+  },
+  {
     path: '/todolist',
     name: 'TodoList',
     component: TodoListView
-  }
+  },
+
 
 
 ]

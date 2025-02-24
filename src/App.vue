@@ -1,20 +1,21 @@
 <template>
   <div>
-    
+    <SideBarPage></SideBarPage>
   </div>
-  <router-view/>
+  <router-view />
 </template>
 
 <script>
+import SideBarPage from './components/SideBarPage.vue';
 
 
 export default {
-  components:{
-  
-  }
-}
+  components: {
+    SideBarPage
+  },
+};
 </script>
-<style>
-  
+
+<style scoped>
 
 </style>
