@@ -8,7 +8,7 @@
         <p class="text-white text-[16px] text-center mb-5" style="margin-top: -35px;">Organize & Schedule with Ease</p>
         <div class="p-8 rounded-2xl bg-white shadow">
           <h2 class="text-gray-800 text-center text-2xl font-bold">Create Your Account</h2>
-          <div class="" v-if="error">{{ error }}</div>
+          <div class="text-red-500" v-if="error">{{ error }}</div>
           <form class="mt-8 space-y-4">
             <div>
               <label class="text-gray-800 text-sm mb-2 block">Email</label>
@@ -28,7 +28,6 @@
               </div>
             </div>
 
-
             <div class="!mt-8">
               <button type="button" @click="onSignUp"
                 class="w-full py-3 px-4 text-sm tracking-wide rounded-full text-white bg-[#24292f] hover:bg-[#31353b] focus:outline-none">
@@ -36,7 +35,7 @@
               </button>
             </div>
           </form>
-          <p class="text-gray-800 text-sm !mt-8 text-center">Already hava account?
+          <p class="text-gray-800 text-sm !mt-8 text-center">Already have account?
             <router-link to="/" class="font-semibold">Sign In</router-link>
           </p>
         </div>
@@ -47,8 +46,9 @@
 
 <script>
 import SignupValidations from '@/services/SignupValidations';
-import { LOADING_SPINNER_SHOW_MUTATION, SIGNUP_ACTION } from '@/store/storeconstants';
-import { mapActions, mapMutations } from 'vuex';
+import { SIGNUP_ACTION } from '@/store/storeconstants';
+import { mapActions } from 'vuex';
+
 export default {
   data() {
     return {
@@ -62,9 +62,6 @@ export default {
     ...mapActions('auth', {
       signup: SIGNUP_ACTION
     }),
-    ...mapMutations({
-      showLoading: LOADING_SPINNER_SHOW_MUTATION
-    }),
     async onSignUp() {
       let Validations = new SignupValidations(
         this.email,
@@ -75,17 +72,31 @@ export default {
       if ('email' in this.errors || 'password' in this.errors) {
         return false;
       }
-      this.showLoading(true);
 
-      await this.signup({ email: this.email.trim(), password: this.password, 
-      }).catch((error) => {
+      try {
+        await this.signup({ 
+          email: this.email.trim(), 
+          password: this.password 
+        });
+        // Show success message
+        alert('Account created successfully! Please login.');
+        // Redirect to login page
+        this.$router.push({ name: 'login' });
+      } catch (error) {
         this.error = error;
-      });
-      this.showLoading(false);
+      }
     },
   },
 };
 </script>
 
+<style scoped>
+.text-red-500 {
+  color: #f87171;
+}
 
-<style scoped></style>
+.min-h-screen {
+  height: 100vh;
+  overflow-y: auto;
+}
+</style>

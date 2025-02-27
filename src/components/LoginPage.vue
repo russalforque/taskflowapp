@@ -10,10 +10,10 @@
 
         <div class="p-8 rounded-2xl bg-white shadow">
           <h2 class="text-gray-800 text-center text-2xl font-bold">Sign in</h2>
-          <div class="text-red-500" v-if="error">{{ error }}</div>
           <form @submit.prevent="onLogin" class="mt-8 space-y-4">
             <!-- Email Input -->
             <div>
+              <div class="text-red-500" v-if="error">{{ error }}</div>
               <label class="text-gray-800 text-sm mb-2 block">Email</label>
               <div class="relative flex items-center">
                 <input name="email" type="email" v-model="email" required
@@ -28,10 +28,13 @@
             <div>
               <label class="text-gray-800 text-sm mb-2 block">Password</label>
               <div class="relative flex items-center">
-                <input name="password" type="password" v-model="password" required
+                <input name="password" :type="showPassword ? 'text' : 'password'" v-model="password" required
                   class="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-gray-800"
                   placeholder="•••••••••••" />
-                <EyeIcon class="w-4 h-4 absolute right-4 text-[#000]" />
+                <button type="button" @click="togglePassword" class="absolute right-4">
+                  <EyeOpenIcon v-if="showPassword" class="w-4 h-4 text-[#000]" />
+                  <EyeIcon v-else class="w-4 h-4 text-[#000]" />
+                </button>
               </div>
               <div class="text-red-500 text-sm mt-1" v-if="errors.password">{{ errors.password }}</div>
             </div>
@@ -74,6 +77,7 @@
 <script>
 import PersonIcon from './svg/PersonIcon.vue';
 import EyeIcon from './svg/EyeIcon.vue';
+import EyeOpenIcon from './svg/EyeOpenIcon.vue';
 import SignupValidations from '@/services/SignupValidations';
 import { mapActions } from 'vuex';
 import { LOGIN_ACTION } from '@/store/storeconstants';
@@ -82,20 +86,25 @@ export default {
   name: 'LoginPage',
   components: {
     PersonIcon,
-    EyeIcon
+    EyeIcon,
+    EyeOpenIcon,
   },
   data() {
     return {
       email: '',
       password: '',
       errors: {},
-      error: ''
+      error: '',
+      showPassword: false
     };
   },
   methods: {
     ...mapActions('auth', {
       login: LOGIN_ACTION,
     }),
+    togglePassword() {
+      this.showPassword = !this.showPassword;
+    },
     async onLogin() {
       const Validations = new SignupValidations(this.email, this.password);
       this.errors = Validations.checkValidations();
@@ -120,4 +129,7 @@ export default {
 .text-red-500 {
   color: #f87171;
 }
+
+
+
 </style>

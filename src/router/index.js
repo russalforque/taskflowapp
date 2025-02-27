@@ -8,26 +8,27 @@ const routes = [
   {
     path: '/',
     name: 'login',
-    component: LoginView
+    component: LoginView,
+    meta: { requiresAuth: false }
   },
   {
     path: '/signup',
     name: 'signup',
-    component: SignUpView
+    component: SignUpView,
+    meta: { requiresAuth: false }
   },
   {
     path: '/home',
     name: 'Home',
-    component: HomeView
+    component: HomeView,
+    meta: { requiresAuth: true }
   },
   {
     path: '/todolist',
     name: 'TodoList',
-    component: TodoListView
+    component: TodoListView,
+    meta: { requiresAuth: true }
   },
-
-
-
 ]
 
 const router = createRouter({

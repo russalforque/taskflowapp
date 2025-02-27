@@ -1,202 +1,252 @@
 <template>
-    <div class="min-h-screen bg-gradient-to-br from-[#1a1c23] to-[#23272e] py-8">
-      <div class="container mx-auto px-4 max-w-4xl">
-        <!-- Header -->
-        <header class="mb-8">
-          <h1 class="text-3xl font-bold text-white mb-2">Task Management</h1>
-          <p class="text-gray-400">Organize your tasks efficiently</p>
+    <div class="min-h-screen bg-[#181A1E] py-5 px-4 sm:px-6 lg:px-8">
+      <div class="container mx-auto max-w-7xl">
+        <!-- Header - More responsive -->
+        <header class="mb-4 text-center sm:text-left">
+          <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4">Task Management</h1>
+          <p class="text-gray-400 text-sm sm:text-base">Organize your tasks efficiently</p>
         </header>
   
-        <!-- Add Task Section -->
-        <div class="bg-[#2a2d35] rounded-xl shadow-lg p-6 mb-8 transform transition-all duration-300 hover:shadow-2xl">
-          <div class="space-y-4">
-            <div class="relative">
-              <input 
-                v-model="newTask.name" 
-                type="text" 
-                placeholder="What needs to be done?"
-                class="w-full h-12 bg-[#1f2127] border-2 border-[#3a3f4b] rounded-lg px-4 text-white placeholder-gray-500 
-                       focus:border-[#76ABAE] focus:outline-none transition-colors duration-300" 
-                @keyup.enter="addTask"
-              />
-              <span class="absolute right-4 top-3 text-gray-500 text-sm">Press Enter to add</span>
+        <!-- Add Task Section - Improved responsiveness -->
+        <div class="bg-[#2a2d35] rounded-xl shadow-lg p-6 sm:p-8 mb-8">
+          <div class="space-y-6">
+            <!-- Task Name Input -->
+            <div class="space-y-2">
+              <label class="block text-gray-300 text-sm font-medium">Task Name</label>
+              <div class="relative">
+                <input 
+                  v-model="newTask.name" 
+                  type="text" 
+                  placeholder="Enter your task here..."
+                  class="w-full h-12 bg-[#1f2127] border-2 border-[#3a3f4b] rounded-lg 
+                         px-4 text-white placeholder-gray-500 text-base
+                         focus:border-[#76ABAE] focus:outline-none focus:ring-2 focus:ring-[#76ABAE]/20
+                         transition-all duration-300" 
+                  @keyup.enter="addTask"
+                />
+                <span class="hidden sm:block absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm
+                             bg-[#1f2127] px-2 py-1 rounded-md border border-[#3a3f4b]">
+                  Press Enter ↵
+                </span>
+              </div>
             </div>
             
-            <div class="flex flex-wrap gap-4">
-              <div class="flex-1 min-w-[200px]">
-                <label class="block text-gray-400 text-sm mb-2">Priority</label>
-                <select 
-                  v-model="newTask.priority" 
-                  class="w-full bg-[#1f2127] border-2 border-[#3a3f4b] rounded-lg p-2 text-white cursor-pointer
-                         focus:border-[#76ABAE] focus:outline-none transition-colors duration-300"
-                >
-                  <option value="low">🟢 Low Priority</option>
-                  <option value="medium">🟡 Medium Priority</option>
-                  <option value="high">🔴 High Priority</option>
-                </select>
+            <!-- Task Details Grid -->
+            <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              <!-- Priority Section -->
+              <div class="space-y-2">
+                <label class="block text-gray-300 text-sm font-medium">Priority Level</label>
+                <div class="relative">
+                  <select 
+                    v-model="newTask.priority" 
+                    class="w-full h-12 bg-[#1f2127] border-2 border-[#3a3f4b] rounded-lg 
+                           px-4 pr-10 text-gray-200 text-base appearance-none cursor-pointer
+                           focus:outline-none focus:ring-2 focus:ring-[#76ABAE]/20 focus:border-[#76ABAE]
+                           transition-all duration-200"
+                  >
+                    <option value="low" class="bg-[#1f2127]">Low Priority</option>
+                    <option value="medium" class="bg-[#1f2127]">Medium Priority</option>
+                    <option value="high" class="bg-[#1f2127]">High Priority</option>
+                  </select>
+                  <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none">
+                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
+                </div>
+                <!-- Priority Indicators -->
+                <div class="flex gap-2">
+                  <div class="flex items-center gap-2 bg-[#1f2127] px-2 py-1 rounded-md">
+                    <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                    <span class="text-xs text-gray-300">Low</span>
+                  </div>
+                  <div class="flex items-center gap-2 bg-[#1f2127] px-2 py-1 rounded-md">
+                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                    <span class="text-xs text-gray-300">Medium</span>
+                  </div>
+                  <div class="flex items-center gap-2 bg-[#1f2127] px-2 py-1 rounded-md">
+                    <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                    <span class="text-xs text-gray-300">High</span>
+                  </div>
+                </div>
               </div>
               
-              <div class="flex-1 min-w-[200px]">
-                <label class="block text-gray-400 text-sm mb-2">Due Date</label>
+              <!-- Due Date Section -->
+              <div class="space-y-2">
+                <label class="block text-gray-300 text-sm font-medium">Due Date</label>
                 <input 
                   type="date" 
                   v-model="newTask.dueDate"
-                  class="w-full bg-[#1f2127] border-2 border-[#3a3f4b] rounded-lg p-2 text-white
-                         focus:border-[#76ABAE] focus:outline-none transition-colors duration-300"
+                  class="w-full h-12 bg-[#1f2127] border-2 border-[#3a3f4b] rounded-lg 
+                         px-4 text-white text-base cursor-pointer
+                         focus:outline-none focus:ring-2 focus:ring-[#76ABAE]/20 focus:border-[#76ABAE]
+                         transition-all duration-200 [color-scheme:dark]"
                 />
               </div>
-            </div>
-  
-            <div class="flex justify-end space-x-3 pt-2">
-              <button 
-                class="px-4 py-2 rounded-lg border-2 border-[#3a3f4b] text-gray-400 hover:bg-[#1f2127] 
-                       transition-colors duration-300"
-                @click="cancelTask"
-              >
-                Cancel
-              </button>
-              <button 
-                class="px-6 py-2 bg-[#76ABAE] text-white rounded-lg hover:bg-[#5a8d90] 
-                       transition-colors duration-300 flex items-center space-x-2"
-                @click="addTask"
-                :disabled="!newTask.name.trim()"
-              >
-                <span>Add Task</span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-  
-        <!-- Task Sections -->
-        <div class="grid gap-6 md:grid-cols-3">
-    <div 
-      v-for="section in sections" 
-      :key="section.id" 
-      class="bg-[#2a2d35] rounded-xl p-6 shadow-lg"
-    >
-      <div class="flex justify-between items-center mb-6">
-        <h2 class="text-xl font-semibold text-white flex items-center space-x-2">
-          <span>{{ section.title }}</span>
-          <span class="text-sm bg-[#1f2127] px-2 py-1 rounded-full text-gray-400">
-            {{ section.tasks.length }}
-          </span>
-        </h2>
-      </div>
-      
-      <div class="space-y-3">
-        <div 
-          v-for="task in section.tasks" 
-          :key="task.id" 
-          class="bg-[#1f2127] rounded-lg p-4 group hover:shadow-md transition-all duration-300
-                 border-2 border-transparent hover:border-[#3a3f4b]"
-        >
-          <div class="flex items-start justify-between">
-            <div class="flex items-start space-x-3 flex-grow">
-              <div 
-                class="flex-shrink-0 w-5 h-5 rounded border-2 border-gray-500 cursor-pointer
-                       hover:border-[#76ABAE] transition-colors duration-300 mt-1"
-                :class="{ 'bg-[#76ABAE] border-[#76ABAE]': task.completed }"
-                @click="toggleTaskStatus(task, section)"
-              >
-                <svg 
-                  v-if="task.completed"
-                  xmlns="http://www.w3.org/2000/svg" 
-                  class="h-4 w-4 text-white" 
-                  viewBox="0 0 20 20" 
-                  fill="currentColor"
-                >
-                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                </svg>
-              </div>
-              
-              <div class="flex-grow">
-                <div 
-                  class="text-white mb-2 cursor-pointer"
-                  :class="{ 'line-through text-gray-500': task.completed }"
-                  @dblclick="editTask(task)"
-                >
-                  {{ task.name }}
-                </div>
-                
-                <div class="flex items-center space-x-3 text-sm">
-                  <span 
-                    class="px-2 py-1 rounded-full text-xs font-medium"
-                    :class="{
-                      'bg-red-900/30 text-red-400': task.priority === 'high',
-                      'bg-yellow-900/30 text-yellow-400': task.priority === 'medium',
-                      'bg-green-900/30 text-green-400': task.priority === 'low'
-                    }"
-                  >
-                    {{ task.priority }}
-                  </span>
-                  <span class="text-gray-500">
-                    {{ formatDate(task.dueDate) }}
-                  </span>
-                  <span 
-                    v-if="task.status" 
-                    class="text-[#76ABAE]"
-                  >
-                    {{ task.status }}
-                  </span>
-                  <span 
-                    v-if="task.timeSpent" 
-                    class="text-gray-400"
-                  >
-                    {{ task.timeSpent }}
-                  </span>
-                </div>
-              </div>
-            </div>
 
-            <div class="flex items-center space-x-2">
               <!-- Action Buttons -->
-              <button 
-                v-if="section.title === 'To Do'"
-                @click="moveToProgress(task, section)"
-                class="opacity-0 group-hover:opacity-100 text-gray-500 hover:text-[#76ABAE] 
-                       transition-all duration-300 px-2 py-1 rounded"
-                title="Move to In Progress"
-              >
-                Start
-              </button>
-
-              <button 
-                v-if="section.title === 'In Progress'"
-                @click="moveToCompleted(task, section)"
-                class="opacity-0 group-hover:opacity-100 text-gray-500 hover:text-[#76ABAE] 
-                       transition-all duration-300 px-2 py-1 rounded"
-                title="Mark as Complete"
-              >
-                Complete
-              </button>
-
-              <button 
-                @click="deleteTask(section, task)"
-                class="opacity-0 group-hover:opacity-100 text-gray-500 hover:text-red-400 
-                       transition-all duration-300 ml-2"
-                title="Delete Task"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
-                </svg>
-              </button>
+              <div class="flex flex-col sm:flex-row gap-3 items-end justify-end sm:mt-7">
+                <button 
+                  class="group relative w-full sm:w-auto px-4 py-2 bg-[#76ABAE] text-white rounded-lg 
+                         hover:bg-[#5a8d90] text-base font-medium flex items-center justify-center gap-2
+                         transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed
+                         focus:outline-none focus:ring-2 focus:ring-[#76ABAE]/20
+                         transform hover:translate-y-[-1px] active:translate-y-[1px]"
+                  @click="addTask"
+                  :disabled="!newTask.name.trim()"
+                >
+                  <span class="relative flex items-center gap-2">
+                    <span>Add Task</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" 
+                         class="h-5 w-5 transform group-hover:rotate-90 transition-transform duration-200" 
+                         fill="none" 
+                         viewBox="0 0 24 24" 
+                         stroke="currentColor"
+                    >
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                    </svg>
+                  </span>
+                  <span class="absolute bottom-0 left-0 right-0 h-1 bg-black/10 transform origin-left"></span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
+  
+        <!-- Task Columns - Responsive Grid -->
+        <div class="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-6">
+          <div 
+            v-for="section in sections" 
+            :key="section.id" 
+            class="bg-[#2a2d35] rounded-xl shadow-lg flex flex-col"
+          >
+            <!-- Section Header -->
+            <div class="p-3 sm:p-4 border-b border-[#3a3f4b] sticky top-0 bg-[#2a2d35] z-10">
+              <div class="flex justify-between items-center">
+                <h2 class="text-lg sm:text-xl font-semibold text-white flex items-center gap-2">
+                  <span>{{ section.title }}</span>
+                  <span class="text-xs sm:text-sm bg-[#1f2127] px-2 py-1 rounded-full text-gray-400">
+                    {{ section.tasks.length }}
+                  </span>
+                </h2>
+              </div>
+            </div>
+  
+            <!-- Tasks List with improved scrolling -->
+            <div 
+              v-if="section.tasks.length > 0"
+              class="p-3 sm:p-4 space-y-3 overflow-y-auto scrollbar-thin scrollbar-thumb-[#3a3f4b] scrollbar-track-[#1f2127]"
+            >
+              <div 
+                v-for="task in section.tasks" 
+                :key="task.id" 
+                class="bg-[#1f2127] rounded-lg p-4 group hover:shadow-md transition-all duration-300
+                       border-2 border-transparent hover:border-[#3a3f4b]"
+              >
+                <!-- Task Content -->
+                <div class="flex items-start justify-between gap-4">
+                  <div class="flex items-start space-x-3 flex-grow min-w-0">
+                    <!-- Checkbox - Only show in Done section -->
+                    <div 
+                      v-if="section.title === 'Done'"
+                      class="flex-shrink-0 w-5 h-5 rounded border-2 border-gray-500 cursor-pointer
+                             hover:border-[#76ABAE] transition-colors duration-300 mt-1"
+                      :class="{ 'bg-[#76ABAE] border-[#76ABAE]': task.completed }"
+                      @click="toggleTaskStatus(task, section)"
+                    >
+                      <svg 
+                        v-if="task.completed"
+                        xmlns="http://www.w3.org/2000/svg" 
+                        class="h-4 w-4 text-white" 
+                        viewBox="0 0 20 20" 
+                        fill="currentColor"
+                      >
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                      </svg>
+                    </div>
+                    
+                    <!-- Task Details - Adjust padding based on section -->
+                    <div class="flex-grow min-w-0" :class="{ 'pl-0': section.title !== 'Done' }">
+                      <div 
+                        class="text-white mb-2 cursor-pointer truncate"
+                        :class="{ 'line-through text-gray-500': task.completed }"
+                        @dblclick="editTask(task)"
+                        :title="task.name"
+                      >
+                        {{ task.name }}
+                      </div>
+                      
+                      <!-- Task Metadata -->
+                      <div class="flex flex-wrap items-center gap-2 text-sm">
+                        <span 
+                          class="px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap"
+                          :class="{
+                            'bg-red-900/30 text-red-400': task.priority === 'high',
+                            'bg-yellow-900/30 text-yellow-400': task.priority === 'medium',
+                            'bg-green-900/30 text-green-400': task.priority === 'low'
+                          }"
+                        >
+                          {{ task.priority }}
+                        </span>
+                        <span class="text-gray-500 whitespace-nowrap">
+                          {{ formatDate(task.dueDate) }}
+                        </span>
+                        <span v-if="task.status" class="text-[#76ABAE] whitespace-nowrap">
+                          {{ task.status }}
+                        </span>
+                        <span v-if="task.timeSpent" class="text-gray-400 whitespace-nowrap">
+                          {{ task.timeSpent }}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+  
+                  <!-- Task Actions -->
+                  <div class="flex items-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex-shrink-0">
+                    <button 
+                      v-if="section.title === 'To Do'"
+                      @click="moveToProgress(task, section)"
+                      class="text-gray-500 hover:text-[#76ABAE] transition-colors px-2 py-1 rounded whitespace-nowrap"
+                      title="Move to In Progress"
+                    >
+                      Start
+                    </button>
+  
+                    <button 
+                      v-if="section.title === 'In Progress'"
+                      @click="moveToCompleted(task, section)"
+                      class="text-gray-500 hover:text-[#76ABAE] transition-colors px-2 py-1 rounded whitespace-nowrap"
+                      title="Mark as Complete"
+                    >
+                      Complete
+                    </button>
+  
+                    <button 
+                      @click="deleteTask(section, task)"
+                      class="text-gray-500 hover:text-red-400 transition-colors ml-2 flex-shrink-0"
+                      title="Delete Task"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </template>
   
   <script>
   import { v4 as uuidv4 } from 'uuid';
-  
+
   export default {
+    components: {
+
+    },
     data() {
       return {
         newTask: {
@@ -434,5 +484,48 @@
   .list-leave-to {
     opacity: 0;
     transform: translateX(30px);
+  }
+  
+  /* Add custom scrollbar styles */
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: #1f2127;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: #3a3f4b;
+    border-radius: 3px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: #4a4f5b;
+  }
+  
+  /* Add responsive font sizes */
+  @media (max-width: 640px) {
+    :root {
+      font-size: 14px;
+    }
+  }
+  
+  /* Add smooth transitions for all interactive elements */
+  button, input, select {
+    transition: all 0.2s ease-in-out;
+  }
+  
+  /* Add focus styles for better accessibility */
+  button:focus, input:focus, select:focus {
+    outline: 2px solid #76ABAE;
+    outline-offset: 2px;
+  }
+  
+  /* Add touch-friendly tap targets for mobile */
+  @media (max-width: 640px) {
+    button, input, select {
+      min-height: 44px;
+    }
   }
   </style>
