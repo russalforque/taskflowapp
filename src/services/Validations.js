@@ -4,6 +4,6 @@ export default class Validations {
     }
 
     static minLength(name, minLength) {
-        return name.length >= minLength; // ✅ Corrected length check
+        return name.length >= minLength; 
     }
 }

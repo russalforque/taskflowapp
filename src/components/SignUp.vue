@@ -47,8 +47,8 @@
 
 <script>
 import SignupValidations from '@/services/SignupValidations';
-import { SIGNUP_ACTION } from '@/store/storeconstants';
-import { mapActions } from 'vuex';
+import { LOADING_SPINNER_SHOW_MUTATION, SIGNUP_ACTION } from '@/store/storeconstants';
+import { mapActions, mapMutations } from 'vuex';
 export default {
   data() {
     return {
@@ -62,7 +62,10 @@ export default {
     ...mapActions('auth', {
       signup: SIGNUP_ACTION
     }),
-    onSignUp() {
+    ...mapMutations({
+      showLoading: LOADING_SPINNER_SHOW_MUTATION
+    }),
+    async onSignUp() {
       let Validations = new SignupValidations(
         this.email,
         this.password,
@@ -72,11 +75,13 @@ export default {
       if ('email' in this.errors || 'password' in this.errors) {
         return false;
       }
+      this.showLoading(true);
 
-      this.signup({ email: this.email.trim(), password: this.password, 
+      await this.signup({ email: this.email.trim(), password: this.password, 
       }).catch((error) => {
         this.error = error;
       });
+      this.showLoading(false);
     },
   },
 };

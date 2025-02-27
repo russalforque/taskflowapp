@@ -1,6 +1,7 @@
 import SignupValidations from "@/services/SignupValidations";
-import { LOGIN_ACTION, SET_USER_TOKEN_MUTATION, SIGNUP_ACTION } from "@/store/storeconstants";
+import { LOGIN_ACTION, SET_USER_TOKEN_MUTATION, SIGNUP_ACTION, } from "@/store/storeconstants";
 import axios from "axios";
+
 
 export default {
     async [LOGIN_ACTION](context, payload) {
@@ -10,6 +11,7 @@ export default {
             returnSecureToken: true,
         };
         let response = '';
+
         try {
             response = await axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCCR2l4bd-iVKgGDZ52EEmHmN1zShGIyu8`,
                 postData,
@@ -20,6 +22,7 @@ export default {
             );
             throw errorMessage;
         }
+
         if (response.status === 200) {
             context.commit(SET_USER_TOKEN_MUTATION, {
                 email: response.data.email,
