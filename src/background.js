@@ -1,8 +1,9 @@
 'use strict'
 
-import { app, protocol, BrowserWindow } from 'electron'
+import { app, protocol, BrowserWindow, ipcMain } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS3_DEVTOOLS } from 'electron-devtools-installer'
+import path from 'path'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 // Scheme must be registered before the app is ready
@@ -14,7 +15,7 @@ async function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
     width: 1100,
-    height: 800,
+    height: 900,
     minWidth: 1000,
     minHeight: 800,
     frame: false,
@@ -22,11 +23,33 @@ async function createWindow() {
     hasShadow: true,
     transparent: true,
     webPreferences: {
-     
       devTools: false,
-      nodeIntegration: true,
-      contextIsolation: false,
+      nodeIntegration: false,
+      contextIsolation: true,
+      preload: path.join(__dirname, isDevelopment ? '../src/preload.js' : 'preload.js')
     }
+  })
+
+  // Enable DevTools in development mode
+  if (isDevelopment) {
+    win.webContents.openDevTools()
+  }
+
+  // Set up IPC handlers for window controls
+  ipcMain.on('minimize-window', () => {
+    win.minimize()
+  })
+
+  ipcMain.on('maximize-window', () => {
+    if (win.isMaximized()) {
+      win.unmaximize()
+    } else {
+      win.maximize()
+    }
+  })
+
+  ipcMain.on('close-window', () => {
+    win.close()
   })
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {

@@ -10,7 +10,7 @@ export default class SignupValidations {
         let err = {};
 
         if (!Validations.checkEmail(this.email)) {
-            err['email'] = 'Invalid Email';
+            err['email'] = 'Please enter a valid Gmail address';
         }
 
         if (!Validations.minLength(this.password, 6)) {
@@ -29,7 +29,7 @@ export default class SignupValidations {
             case 'INVALID_PASSWORD':
                 return 'Invalid password';
             case 'INVALID_EMAIL':
-                return 'Invalid email format';
+                return 'Please enter a valid Gmail address';
             case 'WEAK_PASSWORD':
                 return 'Password should be at least 6 characters';
             case 'TOO_MANY_ATTEMPTS_TRY_LATER':

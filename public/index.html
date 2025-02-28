@@ -19,10 +19,20 @@
         --text-secondary: #8E8F91;
         --transition: all 0.2s ease-in-out;
       }
+
+      /* Add window transition styles */
+      #app {
+        transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+      }
+
+      .window-minimizing {
+        opacity: 0;
+        transform: scale(0.95);
+      }
     </style>
   </head>
   <body class="bg-[#1E2024] text-[#E8E9EA]">
-    <nav class="border-b border-gray-800 h-[42px] flex items-center bg-[var(--primary-bg)] fixed top-0 left-0 right-0 z-50 shadow-md" 
+    <nav class="h-[42px] flex items-center bg-[var(--primary-bg)] fixed top-0 left-0 right-0 z-50" 
          style="-webkit-app-region: drag">
       
       <div class="flex items-center ml-4 space-x-4">
@@ -33,19 +43,19 @@
 
       <div class="ml-auto flex h-full">
         <button id="minimize" 
-                class="h-full px-5 flex items-center justify-center hover:bg-[var(--hover-bg)] transition-all duration-200" 
+                class="h-full px-5 flex items-center justify-center hover:bg-[var(--hover-bg)] transition-all duration-200 outline-none focus:outline-none" 
                 style="-webkit-app-region: no-drag"
                 title="Minimize">
           <i class="fa-solid fa-minus text-[var(--text-secondary)] hover:text-[var(--text-primary)]"></i>
         </button>
         <button id="maximize" 
-                class="h-full px-5 flex items-center justify-center hover:bg-[var(--hover-bg)] transition-all duration-200" 
+                class="h-full px-5 flex items-center justify-center hover:bg-[var(--hover-bg)] transition-all duration-200 outline-none focus:outline-none" 
                 style="-webkit-app-region: no-drag"
                 title="Maximize">
           <i class="fa-regular fa-square text-[var(--text-secondary)] hover:text-[var(--text-primary)]"></i>
         </button>
         <button id="close" 
-                class="h-full px-5 flex items-center justify-center hover:bg-[var(--danger-hover)] transition-all duration-200" 
+                class="h-full px-5 flex items-center justify-center hover:bg-[var(--danger-hover)] transition-all duration-200 outline-none focus:outline-none" 
                 style="-webkit-app-region: no-drag"
                 title="Close">
           <i class="fa-solid fa-xmark text-[var(--text-secondary)] hover:text-[var(--text-primary)]"></i>
@@ -54,5 +64,34 @@
     </nav>
   
     <div id="app" class="pt-[42px] max-h-screen"></div>
+    <script>
+      // Wait for window load to ensure electronAPI is available
+      window.addEventListener('load', () => {
+        // Check if we're running in Electron
+        if (window.electronAPI) {
+          // Window control buttons
+          document.getElementById('minimize').addEventListener('click', () => {
+            // Add minimize animation
+            document.getElementById('app').classList.add('window-minimizing');
+            // Wait for animation to complete before actually minimizing
+            setTimeout(() => {
+              window.electronAPI.minimizeWindow();
+              // Remove the class after minimizing
+              document.getElementById('app').classList.remove('window-minimizing');
+            }, 200);
+          });
+          
+          document.getElementById('maximize').addEventListener('click', () => {
+            window.electronAPI.maximizeWindow();
+          });
+          
+          document.getElementById('close').addEventListener('click', () => {
+            window.electronAPI.closeWindow();
+          });
+        } else {
+          console.warn('Electron API not available - window controls will not function');
+        }
+      });
+    </script>
   </body>
 </html>

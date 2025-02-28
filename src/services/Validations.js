@@ -2,9 +2,9 @@ export default class Validations {
     static checkEmail(email) {
         if (!email) return false;
         
-        // Basic email validation regex
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
+        // Gmail-specific validation regex
+        const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+        return gmailRegex.test(email);
     }
 
     static minLength(str, length) {

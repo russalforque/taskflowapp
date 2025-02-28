@@ -1,10 +1,10 @@
 <template>
   <div class="flex min-h-screen bg-[#181A1E] text-white">
     <!-- Sticky Sidebar -->
-    <div class="fixed left-0 h-screen bg-[#1F2127] flex flex-col py-6 px-2 justify-between w-[80px]">
+    <div class="fixed left-0 rounded-r-lg h-screen bg-[#1F2127] flex flex-col py-6 px-2 justify-between w-[80px]">
       <!-- Logo and Navigation -->
       <div>
-        <img src="images/TaskflowLogo.png" class="w-[50px] h-[40px] mx-auto mb-10">
+        <img src="images/TaskflowLogo.png" class="w-[30px] h-[30px] mx-auto mb-10">
         <nav class="flex flex-col space-y-4">
           <router-link 
             to="/home" 
@@ -34,7 +34,7 @@
       <div class="mb-7">
         <router-link 
           to="/" 
-          class="hover:bg-[#2A2D34] py-2 px-4 rounded block transition-colors duration-200 flex items-center justify-center"
+          class="hover:bg-[#2A2D34] py-2 px-4 rounded block transition-colors duration-200 items-center justify-center"
           :class="{ 'bg-[#2A2D34]': $route.path === '/' }"
         >
           <UserIcon class="text-[#76ABAE] w-[25px]" />
