@@ -1,7 +1,7 @@
 <template>
   <div class="flex min-h-screen bg-[#181A1E] text-white">
     <!-- Sticky Sidebar -->
-    <div class="fixed left-0 rounded-r-lg h-screen bg-[#1F2127] flex flex-col py-6 px-2 justify-between w-[80px]">
+    <div class="fixed left-0 h-screen bg-[#1F2127] flex flex-col py-6 px-2 justify-between w-[80px]">
       <!-- Logo and Navigation -->
       <div>
         <img src="images/TaskflowLogo.png" class="w-[30px] h-[30px] mx-auto mb-10">

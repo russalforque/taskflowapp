@@ -1,15 +1,14 @@
 <template>
+  <transition name="page" appear>
     <div class="min-h-screen bg-[#181A1E] py-5 px-4 sm:px-6 lg:px-8">
       <div class="container mx-auto max-w-7xl">
-        <!-- Header - More responsive -->
         <header class="mb-4 text-center sm:text-left">
           <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4">Task Management</h1>
           <p class="text-gray-400 text-sm sm:text-base">Organize your tasks efficiently</p>
         </header>
-  
-        <!-- Add Task Section - Improved responsiveness -->
         <div class="bg-[#2a2d35] rounded-xl shadow-lg p-6 sm:p-8 mb-8">
           <div class="space-y-6">
+
             <!-- Task Name Input -->
             <div class="space-y-2">
               <label class="block text-gray-300 text-sm font-medium">Task Name</label>
@@ -18,7 +17,7 @@
                   v-model="newTask.name" 
                   type="text" 
                   placeholder="Enter your task here..."
-                  class="w-full h-12 bg-[#1f2127] border-2 border-[#3a3f4b] rounded-lg 
+                  class="w-full h-12 bg-[#1F2127] border-2 border-[#3a3f4b] rounded-lg 
                          px-4 text-white placeholder-gray-500 text-base
                          focus:border-[#76ABAE] focus:outline-none focus:ring-2 focus:ring-[#76ABAE]/20
                          transition-all duration-300" 
@@ -238,294 +237,313 @@
         </div>
       </div>
     </div>
-  </template>
+  </transition>
+</template>
   
-  <script>
-  import { v4 as uuidv4 } from 'uuid';
+<script>
+import { v4 as uuidv4 } from 'uuid';
 
-  export default {
-    components: {
+export default {
+  components: {
 
-    },
-    data() {
-      return {
-        newTask: {
-          name: '',
-          priority: 'medium',
-          dueDate: new Date().toISOString().split('T')[0]
-        },
-        sections: []
-      };
-    },
-  
-    created() {
-      const savedSections = localStorage.getItem('todo-sections');
-      this.sections = savedSections ? JSON.parse(savedSections) : [
-        {
+  },
+  data() {
+    return {
+      newTask: {
+        name: '',
+        priority: 'medium',
+        dueDate: new Date().toISOString().split('T')[0]
+      },
+      sections: []
+    };
+  },
+
+  created() {
+    const savedSections = localStorage.getItem('todo-sections');
+    this.sections = savedSections ? JSON.parse(savedSections) : [
+      {
+        id: uuidv4(),
+        title: 'To Do',
+        tasks: []
+      },
+      {
+        id: uuidv4(),
+        title: 'In Progress',
+        tasks: []
+      },
+      {
+        id: uuidv4(),
+        title: 'Done',
+        tasks: []
+      }
+    ];
+  },
+
+  watch: {
+    sections: {
+      handler(newSections) {
+        localStorage.setItem('todo-sections', JSON.stringify(newSections));
+      },
+      deep: true
+    }
+  },
+
+  methods: {
+    addTask() {
+      if (this.newTask.name.trim() !== '') {
+        this.sections[0].tasks.unshift({
           id: uuidv4(),
-          title: 'To Do',
-          tasks: []
-        },
-        {
-          id: uuidv4(),
-          title: 'In Progress',
-          tasks: []
-        },
-        {
-          id: uuidv4(),
-          title: 'Done',
-          tasks: []
-        }
-      ];
-    },
-  
-    watch: {
-      sections: {
-        handler(newSections) {
-          localStorage.setItem('todo-sections', JSON.stringify(newSections));
-        },
-        deep: true
+          name: this.newTask.name,
+          completed: false,
+          priority: this.newTask.priority,
+          dueDate: this.newTask.dueDate
+        });
+        
+        this.cancelTask();
       }
     },
-  
-    methods: {
-      addTask() {
-        if (this.newTask.name.trim() !== '') {
-          this.sections[0].tasks.unshift({
-            id: uuidv4(),
-            name: this.newTask.name,
-            completed: false,
-            priority: this.newTask.priority,
-            dueDate: this.newTask.dueDate
-          });
-          
-          this.cancelTask();
-        }
-      },
-  
-      cancelTask() {
-        this.newTask = {
-          name: '',
+
+    cancelTask() {
+      this.newTask = {
+        name: '',
+        priority: 'medium',
+        dueDate: new Date().toISOString().split('T')[0]
+      };
+    },
+
+    toggleTask(task) {
+      task.completed = !task.completed;
+    },
+
+    deleteTask(section, task) {
+      const taskIndex = section.tasks.indexOf(task);
+      if (taskIndex > -1) {
+        section.tasks.splice(taskIndex, 1);
+      }
+    },
+
+    editTask(task) {
+      const newName = prompt('Edit task:', task.name);
+      if (newName !== null && newName.trim() !== '') {
+        task.name = newName.trim();
+      }
+    },
+
+    formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric'
+      });
+    },
+
+    addTaskToSection(index) {
+      const taskName = prompt('Enter task name');
+      if (taskName && taskName.trim() !== '') {
+        this.sections[index].tasks.unshift({
+          id: uuidv4(),
+          name: taskName.trim(),
+          completed: false,
           priority: 'medium',
           dueDate: new Date().toISOString().split('T')[0]
-        };
-      },
-  
-      toggleTask(task) {
-        task.completed = !task.completed;
-      },
-  
-      deleteTask(section, task) {
-        const taskIndex = section.tasks.indexOf(task);
-        if (taskIndex > -1) {
-          section.tasks.splice(taskIndex, 1);
-        }
-      },
-  
-      editTask(task) {
-        const newName = prompt('Edit task:', task.name);
-        if (newName !== null && newName.trim() !== '') {
-          task.name = newName.trim();
-        }
-      },
-  
-      formatDate(dateString) {
-        const date = new Date(dateString);
-        return date.toLocaleDateString('en-US', {
-          month: 'short',
-          day: 'numeric'
         });
-      },
-  
-      addTaskToSection(index) {
-        const taskName = prompt('Enter task name');
-        if (taskName && taskName.trim() !== '') {
-          this.sections[index].tasks.unshift({
-            id: uuidv4(),
-            name: taskName.trim(),
-            completed: false,
-            priority: 'medium',
-            dueDate: new Date().toISOString().split('T')[0]
-          });
-        }
-      },
-      moveToProgress(task, fromSection) {
-      // Remove from current section
-      const taskIndex = fromSection.tasks.indexOf(task);
+      }
+    },
+    moveToProgress(task, fromSection) {
+    // Remove from current section
+    const taskIndex = fromSection.tasks.indexOf(task);
+    if (taskIndex > -1) {
+      fromSection.tasks.splice(taskIndex, 1);
+      
+      // Add to In Progress section
+      this.sections[1].tasks.unshift({
+        ...task,
+        status: 'In Progress',
+        startTime: new Date().toISOString()
+      });
+    }
+  },
+
+  moveToCompleted(task, fromSection) {
+    // Remove from current section
+    const taskIndex = fromSection.tasks.indexOf(task);
+    if (taskIndex > -1) {
+      fromSection.tasks.splice(taskIndex, 1);
+      
+      // Calculate time spent in progress
+      const timeSpent = task.startTime ? 
+        this.calculateTimeSpent(new Date(task.startTime)) : 
+        'N/A';
+
+      // Add to Done section
+      this.sections[2].tasks.unshift({
+        ...task,
+        completed: true,
+        status: 'Completed',
+        completedAt: new Date().toISOString(),
+        timeSpent: timeSpent
+      });
+    }
+  },
+
+  toggleTaskStatus(task, section) {
+    if (section.title === 'Done') {
+      // If unchecking in Done section, move back to In Progress
+      const taskIndex = section.tasks.indexOf(task);
       if (taskIndex > -1) {
-        fromSection.tasks.splice(taskIndex, 1);
-        
-        // Add to In Progress section
+        section.tasks.splice(taskIndex, 1);
         this.sections[1].tasks.unshift({
           ...task,
+          completed: false,
           status: 'In Progress',
           startTime: new Date().toISOString()
         });
       }
-    },
+    } else if (section.title === 'In Progress') {
+      // If checking in In Progress, move to Done
+      this.moveToCompleted(task, section);
+    } else {
+      // If in To Do, move to In Progress
+      this.moveToProgress(task, section);
+    }
+  },
 
-    moveToCompleted(task, fromSection) {
-      // Remove from current section
-      const taskIndex = fromSection.tasks.indexOf(task);
-      if (taskIndex > -1) {
-        fromSection.tasks.splice(taskIndex, 1);
-        
-        // Calculate time spent in progress
-        const timeSpent = task.startTime ? 
-          this.calculateTimeSpent(new Date(task.startTime)) : 
-          'N/A';
+  calculateTimeSpent(startTime) {
+    const endTime = new Date();
+    const diff = endTime - startTime;
+    
+    // Convert to hours and minutes
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    
+    if (hours > 0) {
+      return `${hours}h ${minutes}m`;
+    }
+    return `${minutes}m`;
+  },
 
-        // Add to Done section
-        this.sections[2].tasks.unshift({
+  // Optional: Add method to revert task to previous state
+  revertTask(task, section) {
+    const taskIndex = section.tasks.indexOf(task);
+    if (taskIndex > -1) {
+      section.tasks.splice(taskIndex, 1);
+      
+      if (section.title === 'Done') {
+        // Revert to In Progress
+        this.sections[1].tasks.unshift({
           ...task,
-          completed: true,
-          status: 'Completed',
-          completedAt: new Date().toISOString(),
-          timeSpent: timeSpent
+          completed: false,
+          status: 'In Progress'
+        });
+      } else if (section.title === 'In Progress') {
+        // Revert to To Do
+        this.sections[0].tasks.unshift({
+          ...task,
+          status: null,
+          startTime: null
         });
       }
-    },
-
-    toggleTaskStatus(task, section) {
-      if (section.title === 'Done') {
-        // If unchecking in Done section, move back to In Progress
-        const taskIndex = section.tasks.indexOf(task);
-        if (taskIndex > -1) {
-          section.tasks.splice(taskIndex, 1);
-          this.sections[1].tasks.unshift({
-            ...task,
-            completed: false,
-            status: 'In Progress',
-            startTime: new Date().toISOString()
-          });
-        }
-      } else if (section.title === 'In Progress') {
-        // If checking in In Progress, move to Done
-        this.moveToCompleted(task, section);
-      } else {
-        // If in To Do, move to In Progress
-        this.moveToProgress(task, section);
-      }
-    },
-
-    calculateTimeSpent(startTime) {
-      const endTime = new Date();
-      const diff = endTime - startTime;
-      
-      // Convert to hours and minutes
-      const hours = Math.floor(diff / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      
-      if (hours > 0) {
-        return `${hours}h ${minutes}m`;
-      }
-      return `${minutes}m`;
-    },
-
-    // Optional: Add method to revert task to previous state
-    revertTask(task, section) {
-      const taskIndex = section.tasks.indexOf(task);
-      if (taskIndex > -1) {
-        section.tasks.splice(taskIndex, 1);
-        
-        if (section.title === 'Done') {
-          // Revert to In Progress
-          this.sections[1].tasks.unshift({
-            ...task,
-            completed: false,
-            status: 'In Progress'
-          });
-        } else if (section.title === 'In Progress') {
-          // Revert to To Do
-          this.sections[0].tasks.unshift({
-            ...task,
-            status: null,
-            startTime: null
-          });
-        }
-      }
     }
   }
+}
 };
-  </script>
+</script>
   
-  <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-  
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Page Transition */
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+:root {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1f2127;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3a3f4b;
+  border-radius: 3px;
+  transition: background-color 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4a4f5b;
+}
+
+/* Smooth transitions */
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.3s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+/* Add custom scrollbar styles */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: #1f2127;
+  border-radius: 3px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #3a3f4b;
+  border-radius: 3px;
+  transition: background-color 0.2s ease;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: #4a4f5b;
+}
+
+/* Add responsive font sizes */
+@media (max-width: 640px) {
   :root {
-    font-family: 'Inter', sans-serif;
+    font-size: 14px;
   }
-  
-  /* Custom scrollbar */
-  ::-webkit-scrollbar {
-    width: 8px;
-  }
-  
-  ::-webkit-scrollbar-track {
-    background: #1f2127;
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    background: #3a3f4b;
-    border-radius: 4px;
-  }
-  
-  ::-webkit-scrollbar-thumb:hover {
-    background: #4a4f5b;
-  }
-  
-  /* Smooth transitions */
-  .list-enter-active,
-  .list-leave-active {
-    transition: all 0.3s ease;
-  }
-  
-  .list-enter-from,
-  .list-leave-to {
-    opacity: 0;
-    transform: translateX(30px);
-  }
-  
-  /* Add custom scrollbar styles */
-  .scrollbar-thin::-webkit-scrollbar {
-    width: 6px;
-  }
-  
-  .scrollbar-thin::-webkit-scrollbar-track {
-    background: #1f2127;
-  }
-  
-  .scrollbar-thin::-webkit-scrollbar-thumb {
-    background: #3a3f4b;
-    border-radius: 3px;
-  }
-  
-  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-    background: #4a4f5b;
-  }
-  
-  /* Add responsive font sizes */
-  @media (max-width: 640px) {
-    :root {
-      font-size: 14px;
-    }
-  }
-  
-  /* Add smooth transitions for all interactive elements */
+}
+
+/* Add smooth transitions for all interactive elements */
+button, input, select {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Add focus styles for better accessibility */
+button:focus, input:focus, select:focus {
+  outline: 2px solid #76ABAE;
+  outline-offset: 2px;
+}
+
+/* Add touch-friendly tap targets for mobile */
+@media (max-width: 640px) {
   button, input, select {
-    transition: all 0.2s ease-in-out;
+    min-height: 44px;
   }
-  
-  /* Add focus styles for better accessibility */
-  button:focus, input:focus, select:focus {
-    outline: 2px solid #76ABAE;
-    outline-offset: 2px;
-  }
-  
-  /* Add touch-friendly tap targets for mobile */
-  @media (max-width: 640px) {
-    button, input, select {
-      min-height: 44px;
-    }
-  }
-  </style>
+}
+</style>
