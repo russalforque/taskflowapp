@@ -106,7 +106,7 @@
           <div class="bg-[#1F2127] rounded-xl p-8 border border-gray-800">
             <h3 class="text-2xl font-semibold text-white mb-6">Quick Actions</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <router-link to="/todo" class="group p-4 bg-[#2a2d35] rounded-lg text-white hover:bg-[#76ABAE] transition-all duration-300 text-left flex flex-col">
+              <router-link to="/todolist" class="group p-4 bg-[#2a2d35] rounded-lg text-white hover:bg-[#76ABAE] transition-all duration-300 text-left flex flex-col">
                 <span class="block font-medium text-lg group-hover:text-white">New Task</span>
                 <span class="text-sm text-gray-400 group-hover:text-white/90 mt-1">Add a todo item</span>
               </router-link>
