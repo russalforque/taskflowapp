@@ -3,14 +3,15 @@
     <div class="min-h-screen bg-[#181A1E] py-5 px-4 sm:px-6 lg:px-8">
       <div class="container mx-auto max-w-full">
         <header class="mb-4 text-center sm:text-left">
+
           <div className="grid grid-cols-2 gap-4">
             <div className="row-span-2">
               <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4">Task Management</h1>
               <p class="text-gray-400 text-sm sm:text-base">Organize your tasks efficiently</p>
             </div>
-            <div> 
+            <div className="col-start-2 row-start-2">
               <div class="flex justify-end">
-                <button @click="showModal = true" class="group relative px-6 py-3 bg-[#76ABAE] text-white rounded-xl 
+                <button @click="showModal = true" class="group relative px-5 py-3 bg-[#76ABAE] text-white rounded-xl 
                    hover:bg-[#5a8d90] text-sm font-medium flex items-center gap-2 mx-auto sm:mx-0
                    transition-all duration-300 shadow-lg hover:shadow-xl
                    focus:outline-none focus:ring-2 focus:ring-[#76ABAE]/20
@@ -21,6 +22,8 @@
               </div>
             </div>
           </div>
+
+
         </header>
 
         <!-- Task Columns - Responsive Grid -->
@@ -101,11 +104,7 @@
 
                     <button @click="deleteTask(section, task)"
                       class="text-gray-500 hover:text-red-400 transition-colors ml-2 flex-shrink-0" title="Delete Task">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd"
-                          d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                          clip-rule="evenodd" />
-                      </svg>
+                     <BinIcon></BinIcon>
                     </button>
                   </div>
                 </div>
@@ -159,9 +158,9 @@
                       </label>
                     </div>
 
-                    <!-- Task Details Grid with enhanced styling -->
+                    <!-- Task Details Grid with -->
                     <div class="grid gap-8 sm:grid-cols-2">
-                      <!-- Priority Section with enhanced select -->
+                      <!-- Priority Section with -->
                       <div class="space-y-3">
                         <label class="block text-gray-300 text-sm font-medium">Priority Level</label>
                         <div class="relative">
@@ -180,7 +179,7 @@
                             </svg>
                           </div>
                         </div>
-                        <!-- Enhanced Priority Indicators -->
+                        <!-- Priority Indicators -->
                         <div class="flex gap-2">
                           <div
                             class="flex items-center gap-2 bg-[#1f2127]/50 px-3 py-2 rounded-lg border border-[#3a3f4b]/30">
@@ -200,7 +199,7 @@
                         </div>
                       </div>
 
-                      <!-- Due Date Section with enhanced input -->
+                      <!-- Due Date Section -->
                       <div class="space-y-3">
                         <label class="block text-gray-300 text-sm font-medium">Due Date</label>
                         <input type="date" v-model="newTask.dueDate" class="w-full h-14 bg-[#1f2127] border-2 border-[#3a3f4b] rounded-xl 
@@ -212,7 +211,7 @@
                   </div>
                 </div>
 
-                <!-- Enhanced Modal footer -->
+                <!-- Modal footer -->
                 <div class="border-t border-[#3a3f4b] px-8 py-6 flex justify-end gap-4">
                   <button @click="showModal = false" class="px-6 py-3 text-gray-300 text-sm hover:text-white transition-colors duration-300
                            hover:bg-[#3a3f4b]/30 rounded-xl">
@@ -226,12 +225,7 @@
                            transform hover:translate-y-[-2px] active:translate-y-[1px]" @click="addTaskAndClose"
                     :disabled="!newTask.name.trim()">
                     <span>Create Task</span>
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                      class="h-5 w-5 transform group-hover:translate-x-1 transition-transform duration-300" fill="none"
-                      viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                    </svg>
+                    <ArrowRightIcon></ArrowRightIcon>
                   </button>
                 </div>
               </div>
@@ -247,11 +241,16 @@
 import { v4 as uuidv4 } from 'uuid';
 import CheckIcon from './svg/CheckIcon.vue';
 import PlusIcon from './svg/PlusIcon.vue';
+import BinIcon from './svg/BinIcon.vue';
+import ArrowRightIcon from './svg/ArrowRightIcon.vue';
 
 export default {
   components: {
     CheckIcon,
-    PlusIcon
+    PlusIcon,
+    BinIcon,
+    ArrowRightIcon,
+
   },
   data() {
     return {

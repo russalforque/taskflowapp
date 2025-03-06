@@ -115,7 +115,7 @@ export default {
       this.userInput = ''
 
       // Simple response logic
-      let response = "I'm a basic chatbot. I can understand your message but I'm currently limited in my responses. You can enhance my capabilities by integrating with an AI service."
+      let response = "sorry i can accept message right now, plss watch our demo for this app for more info!"
       
       // Add AI response with a small delay to simulate processing
       setTimeout(() => {

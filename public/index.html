@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>images/TaskflowLogo.png">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
@@ -20,14 +20,13 @@
         --transition: all 0.2s ease-in-out;
       }
 
-      /* Add window transition styles */
       #app {
         transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
       }
 
       .window-minimizing {
         opacity: 0;
-        transform: scale(0.95);
+        transform: scale(0.85);
       }
     </style>
   </head>
@@ -52,7 +51,7 @@
                 class="h-full px-5 flex items-center justify-center hover:bg-[var(--hover-bg)] transition-all duration-200 outline-none focus:outline-none" 
                 style="-webkit-app-region: no-drag"
                 title="Maximize">
-          <i class="fa-regular fa-square text-[var(--text-secondary)] hover:text-[var(--text-primary)]"></i>
+                <i class="fa-solid fa-window-maximize text-[var(--text-secondary)] hover:text-[var(--text-primary)]"></i>
         </button>
         <button id="close" 
                 class="h-full px-5 flex items-center justify-center hover:bg-[var(--danger-hover)] transition-all duration-200 outline-none focus:outline-none" 

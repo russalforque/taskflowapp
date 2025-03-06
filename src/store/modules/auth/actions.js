@@ -1,6 +1,7 @@
 import SignupValidations from "@/services/SignupValidations";
-import { LOGIN_ACTION, SET_USER_TOKEN_MUTATION, SIGNUP_ACTION, LOADING_SPINNER_SHOW_MUTATION } from "@/store/storeconstants";
+import { LOGIN_ACTION, SET_USER_TOKEN_MUTATION, SIGNUP_ACTION, LOADING_SPINNER_SHOW_MUTATION, LOGOUT_ACTION } from "@/store/storeconstants";
 import axios from "axios";
+import router from "@/router";
 
 export default {
     async [LOGIN_ACTION]({ commit }, payload) {
@@ -79,5 +80,25 @@ export default {
         } finally {
             commit(LOADING_SPINNER_SHOW_MUTATION, false, { root: true });
         }
+    },
+
+    [LOGOUT_ACTION]({ commit }) {
+        // Clear user data from store
+        commit(SET_USER_TOKEN_MUTATION, {
+            email: null,
+            token: null,
+            expiresIn: null,
+            refreshToken: null,
+            userId: null,
+            firstName: null,
+            lastName: null
+        });
+
+        // Clear any stored data
+        localStorage.clear();
+        sessionStorage.clear();
+
+        // Use Vue Router to navigate to login
+        router.push({ name: 'login' });
     },
 };

@@ -3,6 +3,7 @@ import LoginView from '../views/LoginView.vue'
 import SignUpView from '@/views/SignUpView.vue'
 import HomeView from '@/views/HomeView.vue'
 import TodoListView from '@/views/TodoListView.vue'
+import TaskCalendar from '@/components/Calendar.vue'
 
 const routes = [
   {
@@ -29,6 +30,12 @@ const routes = [
     component: TodoListView,
     meta: { requiresAuth: true }
   },
+  {
+    path: '/calendar',
+    name: 'TaskCalendar',
+    component: TaskCalendar,
+    meta: { requiresAuth: true }
+  }
 ]
 
 const router = createRouter({
