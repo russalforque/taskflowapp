@@ -23,7 +23,7 @@ async function createWindow() {
     hasShadow: true,
     transparent: true,
     webPreferences: {
-      devTools: false,
+      devTools: true,
       nodeIntegration: false,
       contextIsolation: true,
       preload: path.join(__dirname, isDevelopment ? '../src/preload.js' : 'preload.js')

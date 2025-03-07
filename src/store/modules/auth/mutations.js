@@ -7,7 +7,5 @@ export default {
         state.expiresIn = payload.expiresIn;
         state.refreshToken = payload.refreshToken;
         state.userId = payload.userId;
-        state.firstName = payload.firstName;
-        state.lastName = payload.lastName;
     },
 };

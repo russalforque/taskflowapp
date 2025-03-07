@@ -16,6 +16,7 @@
     "@google-cloud/local-auth": "^3.0.1",
     "@headlessui/vue": "^1.7.23",
     "@popperjs/core": "^2.11.8",
+    "@vuepic/vue-datepicker": "^11.0.1",
     "autoprefixer": "^10",
     "axios": "^1.7.9",
     "core-js": "^3.8.3",
