@@ -6,7 +6,7 @@
       <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h2 class="text-2xl font-bold text-white">Schedule Manager</h2>
-          <p class="text-gray-400 text-sm mt-1">Manage your work schedules and shifts</p>
+          <p class="text-gray-400 text-sm mt-1 ml-1">Manage your work schedules and shifts</p>
         </div>
         <div class="flex items-center gap-3 self-end sm:self-auto">
           <div class="flex items-center bg-[#1f2937] rounded-lg p-1">
@@ -41,11 +41,11 @@
       <!-- Calendar Grid -->
       <div class="grid lg:grid-cols-3 gap-6">
         <!-- Calendar Section -->
-        <div class="lg:col-span-2">
+        <div class="lg:col-span-3">
           <div class="bg-[#1f2937] rounded-xl shadow-xl border border-gray-700 overflow-hidden">
             <div class="p-6">
               <div class="flex items-center justify-between mb-4">
-                <div class="flex space-x-4">
+                <div class="flex space-x-5">
                   <button 
                     v-for="view in viewOptions" 
                     :key="view.value"

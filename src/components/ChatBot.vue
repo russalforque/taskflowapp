@@ -92,6 +92,9 @@ export default {
       userInput: '',
       messages: [
         {
+          text: "Hello Rhazel.",
+        },
+        {
           text: "Hello! How can I help you today?",
           isUser: false
         }
