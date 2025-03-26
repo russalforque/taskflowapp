@@ -41,7 +41,7 @@
       <!-- Calendar Grid -->
       <div class="grid lg:grid-cols-3 gap-6">
         <!-- Calendar Section -->
-        <div class="lg:col-span-3">
+        <div class="lg:col-span-2">
           <div class="bg-[#1f2937] rounded-xl shadow-xl border border-gray-700 overflow-hidden">
             <div class="p-6">
               <div class="flex items-center justify-between mb-4">
@@ -702,7 +702,7 @@ export default {
           { values: [eventData] },
           {
             headers: { 
-              Authorization: ` Bearer ya29.a0AeXRPp6NyrDNwswEg47NHmUvV8A_xqK881TwxjyGKJWyV9ayaNoRCUT4w930HvV-xO1UzYiBjcqTGLWPUF9Yh1YHgW5RBSvGMqDpSH6R1zGA5NmsqD2dG5X8vrRbL9duYKmdr4Bw5BQLQNweHlPDn8Q4lbeCySuvgx-UYxw7aCgYKAecSARESFQHGX2MiqUPzsSV3TPcERQQD90AP0w0175`,
+              Authorization: `Bearer ya29.a0AeXRPp77kJ0B93HCTEtEnWD6EXpbnaAH7OnNHInmwzg_79DWLRnIS7inqkAhLe_eXoQAgmkP8qxhwQcQMNPjtGvsh0zjWfcP3kkK167eKf8KSzzcFFnSYVU1uxvsrGnHSE2fLQrC2sWy1mIfUXAVF9q8X4kN1sNdXq4j_86zaCgYKAQASARESFQHGX2MiWDwlr9VDpkRb5sjDNGktYg0175`,
               'Content-Type': 'application/json'
             },
             params: { valueInputOption: 'RAW' }

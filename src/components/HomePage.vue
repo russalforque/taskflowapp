@@ -111,20 +111,20 @@
                 <span class="text-sm text-gray-400 group-hover:text-white/90 mt-1">Add a todo item</span>
               </router-link>
               
-              <button class="group p-4 bg-[#2a2d35] rounded-lg text-white hover:bg-[#76ABAE] transition-all duration-300 text-left flex flex-col">
+              <router-link to="/calendar" class="group p-4 bg-[#2a2d35] rounded-lg text-white hover:bg-[#76ABAE] transition-all duration-300 text-left flex flex-col">
                 <span class="block font-medium text-lg group-hover:text-white">Schedule Event</span>
                 <span class="text-sm text-gray-400 group-hover:text-white/90 mt-1">Add to calendar</span>
-              </button>
+              </router-link>
               
-              <button class="group p-4 bg-[#2a2d35] rounded-lg text-white hover:bg-[#76ABAE] transition-all duration-300 text-left flex flex-col">
+              <router-link to="/calendar" class="group p-4 bg-[#2a2d35] rounded-lg text-white hover:bg-[#76ABAE] transition-all duration-300 text-left flex flex-col">
                 <span class="block font-medium text-lg group-hover:text-white">View Timeline</span>
                 <span class="text-sm text-gray-400 group-hover:text-white/90 mt-1">See your schedule</span>
-              </button>
+              </router-link>
               
-              <button class="group p-4 bg-[#2a2d35] rounded-lg text-white hover:bg-[#76ABAE] transition-all duration-300 text-left flex flex-col">
+              <router-link to="/" class="group p-4 bg-[#2a2d35] rounded-lg text-white hover:bg-[#76ABAE] transition-all duration-300 text-left flex flex-col">
                 <span class="block font-medium text-lg group-hover:text-white">Statistics</span>
-                <span class="text-sm text-gray-400 group-hover:text-white/90 mt-1">Track progress</span>
-              </button>
+                <span class="text-sm text-gray-400 group-hover:text-white/90 mt-1">Track Progress</span>
+              </router-link>
             </div>
           </div>
         </div>
